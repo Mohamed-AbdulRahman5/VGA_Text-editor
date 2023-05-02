@@ -17,7 +17,7 @@ The objectives of the Serial-VGA Text Editor project are as follows:
 
 1. To develop a VGA video display system that can be implemented on an FPGA-based platform.
 2. To provide an easy-to-use interface for editing text on the screen.
-3. To generate high-quality VGA video output with a resolution of 640x480 pixels and 256 colors.
+3. To generate high-quality VGA video output with a resolution of 640x480 pixels and 2048 colors.
 4. To support input devices such as pushbuttons and a UART receiver for controlling the position of the cursor and editing text on the screen.
 
 Hardware Requirements:
