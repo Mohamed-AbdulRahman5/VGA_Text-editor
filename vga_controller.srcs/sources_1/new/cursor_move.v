@@ -1,3 +1,54 @@
+
+
+/*The cursor_move module defines a cursor that can be moved vertically and horizontally in a display.
+ The module has the following inputs and outputs:
+
+Inputs:
+
+clk: The clock signal.
+reset: The reset signal that clears the state of the module.
+p_x: The current pixel x-coordinate.
+p_y: The current pixel y-coordinate.
+up, down, left, right: Movement control inputs.
+Outputs:
+
+fetch: A fetch signal that indicates whether the display should fetch data.
+cursor_on: A signal that indicates whether the cursor should be displayed.
+addr_w: The write address output.
+
+
+The module uses registers to store the current cursor position and pixel position.
+ The module also uses combinatorial logic to determine the next cursor position based on the movement control inputs.
+
+The cursor_move module has three parts:
+
+The top-level always block that updates the registers.
+The vertical movement logic that determines the next cursor y-coordinate based on the movement control inputs.
+The horizontal movement logic that determines the next cursor x-coordinate based on the movement control inputs.
+The top-level always block updates the current cursor position and pixel position registers based on the next cursor position and current pixel position. 
+The block also updates the fetch and cursor_on outputs based on the movement control inputs and the current and next cursor positions.
+
+The vertical movement logic determines the next cursor y-coordinate based on the movement control inputs and the current cursor y-coordinate. 
+If there is no movement (up and down are both low), the next cursor y-coordinate is the same as the current cursor y-coordinate. 
+If up is high and the current cursor y-coordinate is not at the top edge, the next cursor y-coordinate is one less than the current cursor y-coordinate. 
+If down is high and the current cursor y-coordinate is not at the bottom edge, the next cursor y-coordinate is one more than the current cursor y-coordinate.
+
+The horizontal movement logic determines the next cursor x-coordinate based on the movement control inputs and the current cursor x-coordinate. 
+If there is no movement (left and right are both low), the next cursor x-coordinate is the same as the current cursor x-coordinate.
+ If left is high and the current cursor x-coordinate is not at the left edge, the next cursor x-coordinate is one less than the current cursor x-coordinate.
+  If right is high and the current cursor x-coordinate is not at the right edge, the next cursor x-coordinate is one more than the current cursor x-coordinate.
+
+The addr_w output is the concatenation of the current cursor y-coordinate and the current cursor x-coordinate. 
+The fetch output is high if any of the movement control inputs are high.
+ The cursor_on output is high if the current pixel position matches the current cursor position.
+
+*/
+
+
+
+
+
+
 module cursor_move (
    input clk, reset,                 // clock and reset inputs
    input [6:0] p_x,                    // current pixel x coordinate
