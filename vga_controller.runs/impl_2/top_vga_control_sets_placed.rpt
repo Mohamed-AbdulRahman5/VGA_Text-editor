@@ -1,0 +1,84 @@
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
+| Date         : Sun Apr 30 03:09:19 2023
+| Host         : LAPTOP-0O842FN2 running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file top_vga_control_sets_placed.rpt
+| Design       : top_vga
+| Device       : xa7z010
+------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Number of unique control sets                            |    16 |
+| Unused register locations in slices containing registers |    48 |
++----------------------------------------------------------+-------+
+
+
+2. Histogram
+------------
+
++--------+--------------+
+| Fanout | Control Sets |
++--------+--------------+
+|      4 |            1 |
+|      8 |            3 |
+|     10 |            1 |
+|     14 |            1 |
+|    16+ |           10 |
++--------+--------------+
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              16 |            4 |
+| No           | No                    | Yes                    |              16 |            4 |
+| No           | Yes                   | No                     |             100 |           19 |
+| Yes          | No                    | No                     |               0 |            0 |
+| Yes          | No                    | Yes                    |             168 |           34 |
+| Yes          | Yes                   | No                     |             100 |           21 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++----------------+---------------------------------------------+-----------------------------------------------+------------------+----------------+
+|  Clock Signal  |                Enable Signal                |                Set/Reset Signal               | Slice Load Count | Bel Load Count |
++----------------+---------------------------------------------+-----------------------------------------------+------------------+----------------+
+|  clk_IBUF_BUFG | vga_ctrl_top/my_vga_sync/clk_25             | reset_IBUF                                    |                2 |              4 |
+|  clk_IBUF_BUFG |                                             | vga_ctrl_top/my_ascii_rom/rgb_next[0]         |                1 |              8 |
+|  clk_IBUF_BUFG | vga_ctrl_top/uart/Uart_reciever/n_next      | reset_IBUF                                    |                2 |              8 |
+|  clk_IBUF_BUFG | vga_ctrl_top/uart/Uart_reciever/s_next      | reset_IBUF                                    |                2 |              8 |
+|  clk_IBUF_BUFG | up_pb/E[0]                                  | reset_IBUF                                    |                2 |             10 |
+|  clk_IBUF_BUFG | left_pb/E[0]                                | reset_IBUF                                    |                4 |             14 |
+|  clk_IBUF_BUFG |                                             |                                               |                4 |             16 |
+|  clk_IBUF_BUFG | vga_ctrl_top/uart/Uart_reciever/b_next      | reset_IBUF                                    |                2 |             16 |
+|  clk_IBUF_BUFG | vga_ctrl_top/my_vga_sync/p_y_reg[9]_i_2_n_0 | vga_ctrl_top/my_vga_sync/p_y_reg[9]_i_1_n_0   |                3 |             20 |
+|  clk_IBUF_BUFG | vga_ctrl_top/my_vga_sync/clk_25             | vga_ctrl_top/my_vga_sync/p_x_reg[9]_i_1_n_0   |                4 |             20 |
+|  clk_IBUF_BUFG |                                             | vga_ctrl_top/uart/baud_rate/Q_reg[10]_i_1_n_0 |                3 |             22 |
+|  clk_IBUF_BUFG | down_pb/q_next                              | reset_IBUF                                    |                8 |             42 |
+|  clk_IBUF_BUFG | left_pb/q_next                              | reset_IBUF                                    |                8 |             42 |
+|  clk_IBUF_BUFG | right_pb/q_next                             | reset_IBUF                                    |                9 |             42 |
+|  clk_IBUF_BUFG | up_pb/q_next_0                              | reset_IBUF                                    |                9 |             42 |
+|  clk_IBUF_BUFG |                                             | reset_IBUF                                    |               19 |             86 |
++----------------+---------------------------------------------+-----------------------------------------------+------------------+----------------+
+
+

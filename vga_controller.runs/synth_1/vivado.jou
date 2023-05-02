@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Sun Apr 30 03:08:01 2023
+# Process ID: 7976
+# Current directory: C:/Users/mizo4/vga_controller/vga_controller.runs/synth_1
+# Command line: vivado.exe -log top_vga.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source top_vga.tcl
+# Log file: C:/Users/mizo4/vga_controller/vga_controller.runs/synth_1/top_vga.vds
+# Journal file: C:/Users/mizo4/vga_controller/vga_controller.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source top_vga.tcl -notrace
