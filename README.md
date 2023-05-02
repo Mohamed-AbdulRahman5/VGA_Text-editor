@@ -1,10 +1,9 @@
-# VGA_Text-editor
+# #VGA_Text-editor
 
-Thank you for the clarification. Here's the updated project documentation including the correction for the ASCII ROM module:
 
-Project Documentation: Serial-VGA Text Editor for FPGA-based Video Display System
+# Project Documentation: Serial-VGA Text Editor for FPGA-based Video Display System
 
-Introduction:
+# Introduction:
 
 This document provides an overview of the Serial-VGA Text Editor project,
  which is a Verilog-based implementation of a VGA video display system for an FPGA-based platform. 
