@@ -40,7 +40,7 @@ to get the char of the fifo memory and a second to get the data from the ascii r
 The module generates RGB color values based on the following conditions:
 
 If video_on is low, output black color.
-If cursor_on is high, output inverse color (black or white) based on the current bit value from the ASCII word bitmap.
+If cursor_on is high, output inverse color (black) based on the current bit value from the ASCII word bitmap.
 If cursor_on is low, output green color for a high bit value in the ASCII word bitmap and black color for a low bit value.
 The rgb_next register stores the next RGB color value to be output, based on the current state of the input signals.
  The rgb output is updated every clock cycle with the value of rgb_reg.
