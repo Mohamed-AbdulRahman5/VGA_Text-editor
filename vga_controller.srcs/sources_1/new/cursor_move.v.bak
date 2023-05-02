@@ -1,0 +1,44 @@
+
+
+
+
+
+
+
+
+module cursor_move (
+   input clk,reset_n
+   input [6:0] p_x,
+   input [4:0] p_y ,
+   input up,down ,left,right ,
+   output fetch ,
+   output [11:0] addr_w   
+);
+  
+  
+    reg [6:0] cur_x_reg;
+    wire [6:0] cur_x_next;
+    reg [4:0] cur_y_reg;
+    wire [4:0] cur_y_next;
+  
+  
+      always @(posedge clk or negedge reset_n)
+        if(~reset_n) begin
+            cur_x_reg <= 0;
+            cur_y_reg <= 0;
+          end
+         else begin
+            cur_x_reg <= cur_x_next;
+            cur_y_reg <= cur_y_next;
+          end
+  
+  
+  
+  
+  
+   // the address write 
+   assign addr_w = {cur_y_reg, cur_x_reg};
+   
+   
+   
+endmodule

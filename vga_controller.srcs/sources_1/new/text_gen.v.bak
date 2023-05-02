@@ -1,0 +1,60 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 04/15/2023 03:27:13 PM
+// Design Name: 
+// Module Name: text_gen
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module text_gen(
+  input clk,
+  input video_on,
+  input  [2:0] bit_addr,
+  input  [7:0] rom_data,
+  input cursor_on,
+  output [11:0] rgb
+    );
+    
+ reg [11:0] rgb_reg ,rgb_next;
+ reg ascii_bit;
+ //reg cursor_on;   
+  /// register block  
+  always@(posedge clk)
+  begin
+   rgb_reg<= rgb_next;
+  end
+   
+  ///body
+  always@(*) begin
+
+
+  ascii_bit = rom_data[~bit_addr];
+
+   if(~video_on)
+             rgb_next = 12'h000;     // blank
+         else
+             if(cursor_on)
+                 rgb_next = (ascii_bit) ? 12'h000 : 12'h0F0;
+             else
+                 rgb_next = (ascii_bit) ? 12'h0F0 : 12'h000;
+  
+  
+  
+  end
+  
+  assign rgb = rgb_reg;
+  
+endmodule

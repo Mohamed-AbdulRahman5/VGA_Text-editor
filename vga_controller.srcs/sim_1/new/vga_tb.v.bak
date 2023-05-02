@@ -1,0 +1,314 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 04/17/2023 05:36:53 PM
+// Design Name: 
+// Module Name: vga_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+
+module tb_vga_controller;
+
+  // Declare signals
+  reg clk=0;
+  reg reset_n;
+  //reg [6:0] char;
+  wire [11:0] rgb;
+  wire H_sync;
+  wire V_sync;
+  reg rx;
+  reg up,down,left,right ;
+  wire full;
+  // Instantiate vga_controller module
+  vga_controller my_vga_controller (
+   .clk(clk),
+  .reset_n(reset_n),
+  .up(up),
+  .down(down),
+  .left(left),
+  .right(right),
+  .rx(rx),
+  .rgb(rgb),
+  .full(full),
+  .H_sync(H_sync),
+  .V_sync(V_sync)
+  );
+
+  // Clock generation
+  always begin
+    #5 clk = ~clk;
+  end
+
+  // Testbench stimulus
+  initial begin
+    // Initialize signals
+    clk = 0;
+    reset_n = 0;
+         up = 0;
+    down = 0;
+    left = 0;
+    right = 0;
+   // char = 7'h00;
+
+    // Apply reset
+    #10 reset_n = 1;
+    
+// freeze state
+#5 rx =1;
+
+
+            // Move cursor right by one pixel
+            @(posedge clk)
+            up = 0;
+            down = 0;
+            left = 0;
+            right = 1;
+            @(posedge clk)
+            // Steady cursor movement
+            up = 0;
+            down = 0;
+            left = 0;
+            right = 0;
+            #10;
+
+// start bit
+#10 rx =0;
+// 104160 ns is the duration of the single bit
+#104160 
+// char is 00110110
+rx= 0; //lsb first
+#104160  
+rx= 1;
+#104160  
+rx= 1;
+#104160  
+rx= 0;
+#104160 
+rx= 1;
+#104160  
+rx= 1;
+#104160 
+rx= 0;
+#104160 
+rx= 0;
+//parity bit 
+#104160  
+rx= 0; 
+// stop bit 
+#104160  
+rx= 1;
+#104160
+
+
+
+ 
+// start bit
+#10 rx =0;
+#104160 
+// char is 00111001
+rx= 1; //lsb first
+#104160  
+rx= 0;
+#104160  
+rx= 0;
+#104160  
+rx= 1;
+#104160 
+rx= 1;
+#104160  
+rx= 1;
+#104160 
+rx= 0;
+#104160 
+rx= 0;
+//parity bit 
+#104160  
+rx= 0; 
+// stop bit 
+#104160  
+rx= 1;
+#104160 
+            // Move cursor down by one pixel
+          @(posedge clk)
+            up = 0;
+            down = 1;
+            left = 0;
+            right = 0;
+            @(posedge clk)
+            // Steady cursor movement
+            up = 0;
+            down = 0;
+            left = 0;
+            right = 0;
+            #10;
+// start bit
+#10 rx =0;
+#104160 
+// char is 01001110
+rx= 0; //lsb first
+#104160  
+rx= 1;
+#104160  
+rx= 1;
+#104160  
+rx= 1;
+#104160 
+rx= 0;
+#104160  
+rx= 0;
+#104160 
+rx= 1;
+#104160 
+rx= 0;
+//parity bit 
+#104160  
+rx= 0; 
+// stop bit 
+#104160  
+rx= 1;
+
+
+
+   
+      $dumpfile("vga.vcd"); // specify the name of the VCD file
+  $dumpvars(0, tb_vga_controller); 
+    
+  end
+  
+//  // the cursor movement senario
+//    initial begin
+//    // Initialize signals
+//    clk = 0;
+//     up = 0;
+//    down = 0;
+//    left = 0;
+//    right = 0; 
+//   // char = 7'h00;
+//
+//
+//
+//     
+//        // Test scenario
+////       #10
+////      
+////            // Move cursor right by one pixel
+////            up = 0;
+////            down = 0;
+////            left = 0;
+////            right = 1;
+////            #10;
+////            // Steady cursor movement
+////            up = 0;
+////            down = 0;
+////            left = 0;
+////            right = 0;
+////            #10;        
+////            // Move cursor right by one pixel
+////            up = 0;
+////            down = 0;
+////            left = 0;
+////            right = 1;
+////            #10;
+////             // Steady cursor movement
+////            up = 0;
+////            down = 0;
+////            left = 0;
+////            right = 0;
+////            #10;                       
+////            // Move cursor down by one pixel
+////            up = 0;
+////            down = 1;
+////            left = 0;
+////            right = 0;
+////            #10;
+////             // Steady cursor movement
+////            up = 0;
+////            down = 0;
+////            left = 0;
+////            right = 0;
+////            #10;       
+////            // Move cursor down by one pixel
+////            up = 0;
+////            down = 1;
+////            left = 0;
+////            right = 0;
+////            #10;
+////            // Steady cursor movement
+////            up = 0;
+////            down = 0;
+////            left = 0;
+////            right = 0;
+////            #10;        
+////            // Move cursor down by one pixel
+////            up = 0;
+////            down = 1;
+////            left = 0;
+////            right = 0;
+////            #10;
+////            // Steady cursor movement
+////            up = 0;
+////            down = 0;
+////            left = 0;
+////            right = 0;
+////            #10;        
+////            // Move cursor down by one pixel
+////            up = 0;
+////            down = 1;
+////            left = 0;
+////            right = 0;
+////            #10;
+////            // Steady cursor movement
+////            up = 0;
+////            down = 0;
+////            left = 0;
+////            right = 0;
+////            #10;        
+////            // Move cursor down by one pixel
+////            up = 0;
+////            down = 1;
+////            left = 0;
+////            right = 0;
+////            #10;
+////             // Steady cursor movement
+////            up = 0;
+////            down = 0;
+////            left = 0;
+////            right = 0;
+////            #10;                             
+////            // Move cursor up by one pixel
+////            up = 1;
+////            down = 0;
+////            left = 0;
+////            right = 0;
+////            #10;
+//            
+//            // Steady cursor movement
+//            up = 0;
+//            down = 0;
+//            left = 0;
+//            right = 0;
+//            #10;
+//            
+//            // End of test
+//           // $finish;
+//        end
+        
+  
+  
+  
+
+endmodule

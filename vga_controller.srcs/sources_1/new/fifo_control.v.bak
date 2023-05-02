@@ -1,0 +1,111 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 04/16/2023 12:12:10 AM
+// Design Name: 
+// Module Name: fifo_control
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module fifo_control
+#(
+parameter addr_size=4,
+ word_width=8
+)(
+     input clk,
+     input reset_n,
+     input rd,
+     input wr,
+     input [word_width-1:0] data_in,
+     input [addr_size-1:0] addr_r,
+     output [addr_size-1:0] addr_w,//write address
+     output reg full,
+     output reg empty,
+     output we_enable,
+     output rd_enable
+    );
+    
+    reg [addr_size:0] next_addr_w, next_addr_r ;
+    reg [addr_size:0] addr_w_buff ;
+    reg  addr_r_c ;
+    wire full_buff, empty_buff;
+    
+    
+    always@(posedge clk, negedge reset_n) begin
+    if(~reset_n) begin
+     addr_w_buff <=0;
+     full <=0;
+     empty <=1;
+     addr_r_c <=0;
+    end
+    else begin   
+    full <=full_buff;
+    empty <=empty_buff;
+    addr_r_c <=next_addr_r[addr_size];
+    addr_w_buff <= next_addr_w; 
+    end
+    end
+    
+    
+    ///nest state logic
+    
+    always@(*)begin
+      
+ 
+    case({wr,rd})
+    2'b00: begin
+     next_addr_w <=addr_w_buff;
+    next_addr_r <={addr_r_c,addr_r};
+ 
+        end
+    2'b01: begin
+                     if(~empty) begin   // FIFO not empty
+                         next_addr_r={addr_r_c,addr_r}+1;
+                       
+                    end
+                    end
+     2'b10: begin
+                 if(~full) begin 
+                        // FIFO not full
+                      next_addr_w = addr_w_buff+1;
+                    
+                                    end
+              end
+    2'b11:begin 
+             if(~empty) begin   // FIFO not empty
+                next_addr_r={addr_r_c,addr_r}+1;      
+                         end                  
+                   if(~full) begin    // FIFO not full
+                   next_addr_w= addr_w_buff+1;end
+                             end
+    default : begin    next_addr_w <=addr_w_buff;
+                                   next_addr_r <={addr_r_c,addr_r}; end                      
+    endcase
+    end
+    
+    
+    ///
+   ///write and read enable condition 
+     assign empty_buff = (next_addr_r == addr_w_buff) ? 1:0;
+     assign full_buff = (addr_r_c != next_addr_w[addr_size])&&(next_addr_w[addr_size-1:0] == addr_r)? 1:0;
+     assign we_enable =wr&(!full);
+     assign  rd_enable=rd&(!empty) ;
+     
+     
+     
+     // output
+      assign addr_w= addr_w_buff[addr_size-1:0];
+endmodule
