@@ -1,4 +1,4 @@
-# #VGA_Text-editor
+# # VGA_Text-editor
 
 
 # Project Documentation: Serial-VGA Text Editor for FPGA-based Video Display System
