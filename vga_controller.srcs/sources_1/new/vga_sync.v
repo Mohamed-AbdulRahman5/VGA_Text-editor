@@ -48,7 +48,7 @@ module vga_sync#(
   parameter VB=33, // Number of lines in the vertical back porch (default: 33)
   parameter VT=2 // Number of lines in the vertical retrace (default: 2)
 )(
-  input clk, // Clock signal 25 MHz
+  input clk, // Clock signal 100 MHz
   input reset, // Reset signal 
   output [$clog2(H)-1:0] p_x, // Current pixel location (width: `$clog2(H)`)
   output [$clog2(H)-1:0] p_y, // Current line location (height: `$clog2(H)`)
@@ -73,7 +73,7 @@ always @(posedge clk ) begin
     clk_25 <= 1'b0;
   end else begin
     counter <= counter + 1;
-    clk_25  <= &counter;
+    clk_25  <= &counter;// to make the width of the clk_25 is 1 clock cycle 
   end
 end
 
@@ -85,7 +85,7 @@ end
       H_sync_reg <= 0;
       V_sync_reg <= 0;
       video_on_reg <= 0;
-    end else if (clk_25) begin
+    end else if (clk_25) begin // make the divided clock as enable signal 
        p_x_reg <= p_x_next;
        p_y_reg <= p_y_next;
        H_sync_reg <= H_sync_next;
@@ -102,10 +102,10 @@ end
 
   // Update the current pixel location and output signals on every clock edge
   always @* begin
-    // Reset the status signals
+    // Reset the status signals 
     H_end <= 0;
     V_end <= 0;
-    // to prevent latches
+    // to avoid latches
     p_x_next <= p_x_reg;
     p_y_next <= p_y_reg;
       // Update the next pixel location based on the current pixel location and VGA timing parameters
@@ -133,6 +133,7 @@ end
   end
 
   // Assign the output signals to their respective output ports
+  // buffering the outputs 
   assign p_x = p_x_reg;
   assign p_y = p_y_reg;
   assign H_sync = H_sync_reg;
