@@ -103,33 +103,33 @@ end
   // Update the current pixel location and output signals on every clock edge
   always @* begin
     // Reset the status signals 
-    H_end <= 0;
-    V_end <= 0;
+    H_end = 0;
+    V_end = 0;
     // to avoid latches
-    p_x_next <= p_x_reg;
-    p_y_next <= p_y_reg;
+    p_x_next = p_x_reg;
+    p_y_next = p_y_reg;
       // Update the next pixel location based on the current pixel location and VGA timing parameters
     if (H_end) begin
-      p_x_next <= 0;
+      p_x_next = 0;
       if (V_end) begin
-        p_y_next <= 0;
+        p_y_next = 0;
       end else begin
-        p_y_next <= p_y_reg + 1;
+        p_y_next = p_y_reg + 1;
       end
     end else begin
-      p_x_next <= p_x_reg + 1;
+      p_x_next = p_x_reg + 1;
     end
 
     // Update the horizontal and vertical sync signals based on the current pixel location and VGA timing parameters
-    H_sync_next <= ((p_x_reg < (HD + HF - 1)) || (p_x_reg >= (HD + HF + HT - 1)));
-    V_sync_next <= ((p_y_reg < (VD + VF - 1)) || (p_y_reg >= (VD + VF + VT - 1)));
+    H_sync_next = ((p_x_reg < (HD + HF - 1)) || (p_x_reg >= (HD + HF + HT - 1)));
+    V_sync_next = ((p_y_reg < (VD + VF - 1)) || (p_y_reg >= (VD + VF + VT - 1)));
 
     // Update the video on/off signal based on the current pixel location and VGA timing parameters
-    video_on_next <= ((p_y_reg < VD) && (p_x_reg < HD));
+    video_on_next = ((p_y_reg < VD) && (p_x_reg < HD));
 
     // Update the status signals based on the current pixel location
-    H_end <= (p_x_reg == H - 1);
-    V_end <= (p_y_reg == V - 1);
+    H_end = (p_x_reg == H - 1);
+    V_end = (p_y_reg == V - 1);
   end
 
   // Assign the output signals to their respective output ports
